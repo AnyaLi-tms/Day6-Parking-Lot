@@ -20,7 +20,7 @@ public class ParkingLot {
 
 
     public Ticket park(Car car) {
-        if (capacity == 0) throw new IllegalArgumentException("No available position!");
+        if (availableCapacity == 0) throw new IllegalArgumentException("No available position!");
         if (car == null) throw new IllegalArgumentException("Please park a car!");
         if (car.getIsParking()) throw new IllegalArgumentException("car is parked!");
         return generateTicket(car);
@@ -33,12 +33,13 @@ public class ParkingLot {
         return new Ticket(car.getCarLicense(), this.parkingLotName, false);
     }
 
-    public void fetch(Ticket ticket) {
+    public Car fetch(Ticket ticket) {
         Car car = verify(ticket);
         availableCapacity++;
         this.packedCars.remove(ticket.getCarLicense());
         car.updateIsParking();
         ticket.updateIsUsed();
+        return car;
     }
 
     private Car verify(Ticket ticket) {
@@ -69,6 +70,6 @@ public class ParkingLot {
     }
 
     protected float calcAvailableRate() {
-        return (float) this.getAvailableCapacity() / (float) this.getCapacity();
+        return (float) this.availableCapacity / (float) this.capacity;
     }
 }

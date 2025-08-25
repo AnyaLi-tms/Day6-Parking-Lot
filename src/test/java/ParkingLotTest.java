@@ -52,7 +52,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void should_return_null_given_ticket_when_fetching(){
+    public void should_return_car_given_ticket_when_fetching(){
         // Given
         String carId = "12345";
         String parkingLotName = "Parking Lot";
@@ -62,9 +62,11 @@ public class ParkingLotTest {
         Ticket ticket = parkingLot.park(car);
 
         // When
-        parkingLot.fetch(ticket);
+        Car car1 = parkingLot.fetch(ticket);
 
         // Then
+        assertEquals(car,car1);
+        assertEquals(car.getCarLicense(), car1.getCarLicense());
         assertTrue(ticket.getIsUsed());
         assertFalse(car.getIsParking());
     }
@@ -88,7 +90,7 @@ public class ParkingLotTest {
 
 
     @Test
-    public void should_throw_exception_given_wrong_car_ticket_when_fetching(){
+    public void should_throw_exception_given_used_ticket_when_fetching(){
         // Given
         String parkingLotName = "Parking Lot";
         int capacity = 20;
