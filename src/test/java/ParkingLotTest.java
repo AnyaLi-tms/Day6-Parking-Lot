@@ -52,7 +52,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void should_throw_exception_given_ticket_when_unparking(){
+    public void should_return_null_given_ticket_when_unparking(){
         // Given
         String carId = "12345";
         String parkingLotName = "Parking Lot";
@@ -62,7 +62,7 @@ public class ParkingLotTest {
         Ticket ticket = parkingLot.park(car);
 
         // When
-        parkingLot.unpack(ticket);
+        parkingLot.fetch(ticket);
 
         // Then
         assertTrue(ticket.getIsUsed());
@@ -80,7 +80,7 @@ public class ParkingLotTest {
         Ticket ticket = parkingLot.park(car);
 
         // When
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parkingLot2.unpack(ticket));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parkingLot2.fetch(ticket));
         // Then
         assertEquals("Unrecognized parking ticket!", exception.getMessage());
     }
@@ -95,10 +95,10 @@ public class ParkingLotTest {
         ParkingLot parkingLot = new ParkingLot(parkingLotName, capacity);
         Car car = new Car("1");
         Ticket ticket = parkingLot.park(car);
-        parkingLot.unpack(ticket);
+        parkingLot.fetch(ticket);
 
         // When
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parkingLot.unpack(ticket));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parkingLot.fetch(ticket));
         // Then
         assertEquals("Ticket is used!", exception.getMessage());
     }
@@ -114,9 +114,8 @@ public class ParkingLotTest {
         Ticket ticket = parkingLot.park(car);
 
         // When
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parkingLot.unpack(null));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parkingLot.fetch(null));
         // Then
         assertEquals("Ticket cannot be null!", exception.getMessage());
     }
-
 }

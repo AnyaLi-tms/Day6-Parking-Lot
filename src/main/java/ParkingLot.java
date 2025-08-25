@@ -26,7 +26,7 @@ public class ParkingLot {
         return new Ticket(car.getCarLicense(), this.parkingLotName, false);
     }
 
-    public void unpack(Ticket ticket) {
+    public void fetch(Ticket ticket) {
         if(ticket == null) throw new IllegalArgumentException("Ticket cannot be null!");
         if(ticket.getIsUsed()) throw new IllegalArgumentException("Ticket is used!");
         if (!this.parkingLotName.equals(ticket.getParkingLotName())) {
@@ -40,7 +40,5 @@ public class ParkingLot {
         this.packedCars.remove(ticket.getCarLicense());
         car.updateIsParking();
         ticket.updateIsUsed();
-        return;
-
     }
 }
