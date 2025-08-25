@@ -42,8 +42,8 @@ public class ParkingLot {
         ticket.updateIsUsed();
     }
 
-    public boolean isFull() {
-        return capacity == 0;
+    public int getCapacity() {
+        return capacity;
     }
 
     public String getParkingLotName() {

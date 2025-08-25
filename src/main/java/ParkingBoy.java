@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class ParkingBoy {
     private final HashMap<String,ParkingLot> parkingLots;
@@ -18,7 +16,7 @@ public class ParkingBoy {
     }
 
     public Ticket park(Car car) {
-        ParkingLot parkingLot = findNotFullParkingLotBySequence();
+        ParkingLot parkingLot = findMaxParkingLotBySequence();
         if(parkingLot == null) {
             throw new IllegalArgumentException("No available position!");
         }
@@ -31,12 +29,9 @@ public class ParkingBoy {
         parkingLot.fetch(ticket);
     }
 
-    private ParkingLot findNotFullParkingLotBySequence() {
-        for (ParkingLot parkingLot : parkingLots.values()) {
-            if(!parkingLot.isFull()) {
-                return parkingLot;
-            }
-        }
-        return null;
+    private ParkingLot findMaxParkingLotBySequence() {
+        Optional<ParkingLot> maxParkingLot = parkingLots.values().stream()
+                .max(Comparator.comparingInt(ParkingLot::getCapacity));
+        return maxParkingLot.orElse(null);
     }
 }
