@@ -4,7 +4,7 @@ import java.util.Map;
 public class ParkingLot {
     private final String parkingLotName;
     private int capacity;
-    private Map<String, Car> packedCars;
+    private final Map<String, Car> packedCars;
 
     public ParkingLot(String parkingLotName) {
         this(parkingLotName, 10);
@@ -40,5 +40,13 @@ public class ParkingLot {
         this.packedCars.remove(ticket.getCarLicense());
         car.updateIsParking();
         ticket.updateIsUsed();
+    }
+
+    public boolean isFull() {
+        return capacity == 0;
+    }
+
+    public String getParkingLotName() {
+        return parkingLotName;
     }
 }
