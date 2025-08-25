@@ -35,7 +35,7 @@ public class ParkingLotTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parkingLot.park(car));
 
         // Then
-        assertEquals("Current parking lot has no capacity!", exception.getMessage());
+        assertEquals("No available position!", exception.getMessage());
     }
 
     @Test
@@ -82,7 +82,7 @@ public class ParkingLotTest {
         // When
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parkingLot2.unpack(ticket));
         // Then
-        assertEquals("Ticket does not match parking lot!", exception.getMessage());
+        assertEquals("Unrecognized parking ticket!", exception.getMessage());
     }
 
 
@@ -100,7 +100,7 @@ public class ParkingLotTest {
         // When
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parkingLot.unpack(ticket));
         // Then
-        assertEquals("Ticket does not match car license!", exception.getMessage());
+        assertEquals("Ticket is used!", exception.getMessage());
     }
 
 

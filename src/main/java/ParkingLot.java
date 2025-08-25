@@ -18,7 +18,7 @@ public class ParkingLot {
 
 
     public Ticket park(Car car) {
-        if (capacity == 0) throw new IllegalArgumentException("Current parking lot has no capacity!");
+        if (capacity == 0) throw new IllegalArgumentException("No available position!");
         if (car == null) throw new IllegalArgumentException("Please park a car!");
         capacity--;
         car.updateIsParking();
@@ -28,8 +28,9 @@ public class ParkingLot {
 
     public void unpack(Ticket ticket) {
         if(ticket == null) throw new IllegalArgumentException("Ticket cannot be null!");
+        if(ticket.getIsUsed()) throw new IllegalArgumentException("Ticket is used!");
         if (!this.parkingLotName.equals(ticket.getParkingLotName())) {
-            throw new IllegalArgumentException("Ticket does not match parking lot!");
+            throw new IllegalArgumentException("Unrecognized parking ticket!");
         }
         Car car = packedCars.getOrDefault(ticket.getCarLicense(), null);
         if(car == null) {
