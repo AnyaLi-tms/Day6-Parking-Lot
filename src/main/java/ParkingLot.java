@@ -3,7 +3,8 @@ import java.util.Map;
 
 public class ParkingLot {
     private final String parkingLotName;
-    private int capacity;
+    private final int capacity;
+    private int availableCapacity;
     private final Map<String, Car> packedCars;
 
     public ParkingLot(String parkingLotName) {
@@ -13,6 +14,7 @@ public class ParkingLot {
     public ParkingLot(String parkingLotName, int capacity) {
         this.parkingLotName = parkingLotName;
         this.capacity = capacity;
+        this.availableCapacity = capacity;
         packedCars = new HashMap<String, Car>();
     }
 
@@ -20,11 +22,12 @@ public class ParkingLot {
     public Ticket park(Car car) {
         if (capacity == 0) throw new IllegalArgumentException("No available position!");
         if (car == null) throw new IllegalArgumentException("Please park a car!");
+        if (car.getIsParking()) throw new IllegalArgumentException("car is parked!");
         return generateTicket(car);
     }
 
     private Ticket generateTicket(Car car) {
-        capacity--;
+        availableCapacity--;
         car.updateIsParking();
         packedCars.put(car.getCarLicense(), car);
         return new Ticket(car.getCarLicense(), this.parkingLotName, false);
@@ -32,7 +35,7 @@ public class ParkingLot {
 
     public void fetch(Ticket ticket) {
         Car car = verify(ticket);
-        capacity++;
+        availableCapacity++;
         this.packedCars.remove(ticket.getCarLicense());
         car.updateIsParking();
         ticket.updateIsUsed();
@@ -45,9 +48,7 @@ public class ParkingLot {
             throw new IllegalArgumentException("Unrecognized parking ticket!");
         }
         Car car = packedCars.getOrDefault(ticket.getCarLicense(), null);
-        if (car == null) {
-            throw new IllegalArgumentException("Ticket does not match car license!");
-        }
+        if (car == null) throw new IllegalArgumentException("Ticket does not match car license!");
         return car;
     }
 
@@ -55,7 +56,19 @@ public class ParkingLot {
         return capacity;
     }
 
+    public int getAvailableCapacity() {
+        return availableCapacity;
+    }
+
     public String getParkingLotName() {
         return parkingLotName;
+    }
+
+    public void setAvailableCapacity(int availableCapacity) {
+        this.availableCapacity = availableCapacity;
+    }
+
+    protected float calcAvailableRate() {
+        return (float) this.getAvailableCapacity() / (float) this.getCapacity();
     }
 }
