@@ -1,23 +1,23 @@
 import java.util.*;
 
 public class ParkingBoy {
-    private final HashMap<String,ParkingLot> parkingLots;
+    private final HashMap<String, ParkingLot> parkingLots;
 
     public ParkingBoy(ParkingLot parkingLot) {
         this.parkingLots = new HashMap<>();
-        this.parkingLots.put(parkingLot.getParkingLotName(),parkingLot);
+        this.parkingLots.put(parkingLot.getParkingLotName(), parkingLot);
     }
 
     public ParkingBoy(List<ParkingLot> parkingLots) {
         this.parkingLots = new HashMap<>();
-        for(ParkingLot parkingLot : parkingLots){
-            this.parkingLots.put(parkingLot.getParkingLotName(),parkingLot);
+        for (ParkingLot parkingLot : parkingLots) {
+            this.parkingLots.put(parkingLot.getParkingLotName(), parkingLot);
         }
     }
 
     public Ticket park(Car car) {
         ParkingLot parkingLot = findMaxParkingLotBySequence();
-        if(parkingLot == null) {
+        if (parkingLot == null) {
             throw new IllegalArgumentException("No available position!");
         }
         return parkingLot.park(car);

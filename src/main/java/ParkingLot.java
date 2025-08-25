@@ -20,6 +20,10 @@ public class ParkingLot {
     public Ticket park(Car car) {
         if (capacity == 0) throw new IllegalArgumentException("No available position!");
         if (car == null) throw new IllegalArgumentException("Please park a car!");
+        return generateTicket(car);
+    }
+
+    private Ticket generateTicket(Car car) {
         capacity--;
         car.updateIsParking();
         packedCars.put(car.getCarLicense(), car);
@@ -27,19 +31,24 @@ public class ParkingLot {
     }
 
     public void fetch(Ticket ticket) {
-        if(ticket == null) throw new IllegalArgumentException("Ticket cannot be null!");
-        if(ticket.getIsUsed()) throw new IllegalArgumentException("Ticket is used!");
-        if (!this.parkingLotName.equals(ticket.getParkingLotName())) {
-            throw new IllegalArgumentException("Unrecognized parking ticket!");
-        }
-        Car car = packedCars.getOrDefault(ticket.getCarLicense(), null);
-        if(car == null) {
-            throw new IllegalArgumentException("Ticket does not match car license!");
-        }
+        Car car = verify(ticket);
         capacity++;
         this.packedCars.remove(ticket.getCarLicense());
         car.updateIsParking();
         ticket.updateIsUsed();
+    }
+
+    private Car verify(Ticket ticket) {
+        if (ticket == null) throw new IllegalArgumentException("Ticket cannot be null!");
+        if (ticket.getIsUsed()) throw new IllegalArgumentException("Ticket is used!");
+        if (!this.parkingLotName.equals(ticket.getParkingLotName())) {
+            throw new IllegalArgumentException("Unrecognized parking ticket!");
+        }
+        Car car = packedCars.getOrDefault(ticket.getCarLicense(), null);
+        if (car == null) {
+            throw new IllegalArgumentException("Ticket does not match car license!");
+        }
+        return car;
     }
 
     public int getCapacity() {
