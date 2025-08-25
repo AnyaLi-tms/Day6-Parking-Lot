@@ -1,0 +1,11 @@
+- Given "" When "" Then ""
+- 
+- Given "一个有空位的停车场" AND "有车" When "停车" Then "返回凭证"
+- Given "一个无空位的停车场" AND "有车" When "停车" Then "不允许停车，返回提示"
+-
+- Given "无车" When "停车" Then "返回报错"
+- 
+- Given "正确的凭证" When "取车" Then "成功取车，销毁凭证"
+- Given "错误的凭证" When "取车" Then "取车失败，归还凭证"
+- Given "重复凭证" When "取车" Then "取车失败，提示重复"
+- Given "无凭证" When "取车" Then "失败，提示没有凭证"
