@@ -52,7 +52,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void should_return_null_given_ticket_when_unparking(){
+    public void should_return_null_given_ticket_when_fetching(){
         // Given
         String carId = "12345";
         String parkingLotName = "Parking Lot";
@@ -70,7 +70,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void should_throw_exception_given_wrong_parking_lot_ticket_when_unparking(){
+    public void should_throw_exception_given_wrong_parking_lot_ticket_when_fetching(){
         // Given
         String parkingLotName = "Parking Lot";
         int capacity = 20;
@@ -88,7 +88,7 @@ public class ParkingLotTest {
 
 
     @Test
-    public void should_throw_exception_given_wrong_car_ticket_when_unparking(){
+    public void should_throw_exception_given_wrong_car_ticket_when_fetching(){
         // Given
         String parkingLotName = "Parking Lot";
         int capacity = 20;
@@ -105,7 +105,7 @@ public class ParkingLotTest {
 
 
     @Test
-    public void should_throw_exception_given_no_ticket_when_unparking(){
+    public void should_throw_exception_given_no_ticket_when_fetching(){
         // Given
         String parkingLotName = "Parking Lot";
         int capacity = 20;
